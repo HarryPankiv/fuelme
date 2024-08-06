@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
+import { axiosInstance } from '../../../api/config';
 
 const fetchReport = async () => {
-  const response = await axios.get('http://localhost:3000/report');
+  const response = await axiosInstance.get('/report');
   if (response.status !== 200) {
     throw new Error('Error fetching report data');
   }

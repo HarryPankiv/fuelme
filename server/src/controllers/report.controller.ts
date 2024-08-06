@@ -22,12 +22,8 @@ export class ReportController {
         }),
     }))
     async uploadCSV(@UploadedFile() file) {
-        console.log(file);
-
         const records = await parseCSV(file.path);
         const formattedTransactions = records.map(transformCSVRecord);
-
-        console.log(formattedTransactions);
         await this.transactionService.saveTransactions(formattedTransactions);
         return { message: 'File uploaded and processed successfully' };
     }
@@ -41,8 +37,6 @@ export class ReportController {
     @Get('top5')
     async getTop5Accounts(@Res() res: Response) {
         const transactions = await this.transactionService.getTop5AccountsByProfit();
-
-        console.log(transactions);
 
         return res
             .status(200)

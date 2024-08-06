@@ -9,7 +9,8 @@ import { useFetchMonthlyTrends } from './hooks/useFetchMonthlyTrends';
 const PLAccountTrendChart: React.FC = () => {
   const { data: masterCategories } = useFetchUniqueCategories();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const { data: monthlyTrends, refetch: fetchMonthlyTrends } = useFetchMonthlyTrends(selectedCategory);
+  const { data: monthlyTrends, refetch: fetchMonthlyTrends } =
+    useFetchMonthlyTrends(selectedCategory);
 
   useEffect(() => {
     if (selectedCategory) {
@@ -23,7 +24,7 @@ const PLAccountTrendChart: React.FC = () => {
       data: (monthlyTrends || []).map((item) => ({
         x: dayjs(item.month).format('MMM YYYY'),
         y: Number(item.totalAmount).toFixed(2),
-      }))
+      })),
     },
   ];
 
@@ -40,7 +41,7 @@ const PLAccountTrendChart: React.FC = () => {
         }))}
       />
       {monthlyTrends && (
-        <Flex style={{ height: "400px", width: "100%" }}>
+        <Flex style={{ height: '400px', width: '100%' }}>
           <ResponsiveLine
             data={data}
             margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
