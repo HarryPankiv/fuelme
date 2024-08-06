@@ -1,7 +1,7 @@
-import { Controller, Post, Get, UploadedFile, UseInterceptors, Res } from '@nestjs/common';
+import { Controller, Post, Get, UploadedFile, UseInterceptors, Res, Query } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { TransactionService } from '../services/transaction.service';
-import { parseCSV } from '../utils/csv-parser';
+import { parseCSV, transformCSVRecord } from '../utils/csv-parser';
 import { diskStorage } from 'multer';
 import { Response } from 'express';
 import * as path from 'path';
@@ -22,8 +22,13 @@ export class ReportController {
         }),
     }))
     async uploadCSV(@UploadedFile() file) {
+        console.log(file);
+
         const records = await parseCSV(file.path);
-        await this.transactionService.saveTransactions(records);
+        const formattedTransactions = records.map(transformCSVRecord);
+
+        console.log(formattedTransactions);
+        await this.transactionService.saveTransactions(formattedTransactions);
         return { message: 'File uploaded and processed successfully' };
     }
 
@@ -31,5 +36,27 @@ export class ReportController {
     async getReport(@Res() res: Response) {
         const report = await this.transactionService.getReport();
         return res.status(200).json(report);
+    }
+
+    @Get('top5')
+    async getTop5Accounts(@Res() res: Response) {
+        const transactions = await this.transactionService.getTop5AccountsByProfit();
+
+        console.log(transactions);
+
+        return res
+            .status(200)
+            .json(transactions);
+    }
+
+
+    @Get('monthly-trends')
+    async getMonthlyTotalsByMasterCategory(@Query('masterCategory') masterCategory: string) {
+        return this.transactionService.getMonthlyTotalsByMasterCategory(masterCategory);
+    }
+
+    @Get('master-category-list')
+    async getUniqueMasterCategories() {
+        return this.transactionService.getUniqueMasterCategories();
     }
 }

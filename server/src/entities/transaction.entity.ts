@@ -5,13 +5,13 @@ export class Transaction {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ type: 'date' })
   date: Date;
 
   @Column()
   plAccount: string;
 
-  @Column()
+  @Column({ type: 'float' })
   amount: number;
 
   @Column()
