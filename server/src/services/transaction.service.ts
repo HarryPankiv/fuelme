@@ -31,7 +31,7 @@ export class TransactionService {
     }
 
     async getTop5AccountsByProfit(): Promise<any[]> {
-        const startOfMonth = dayjs().subtract(2, 'month').startOf('month').format("YYYY-MM-DD").toString();
+        const startOfMonth = dayjs().subtract(1, 'month').startOf('month').format("YYYY-MM-DD").toString();
         const endOfMonth = dayjs().subtract(1, 'month').endOf('month').format("YYYY-MM-DD").toString();
 
         return this.transactionRepository
