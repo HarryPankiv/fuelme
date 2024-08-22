@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { ResponsiveLine } from '@nivo/line';
-import { Card, DatePicker, Flex, Select, Space } from 'antd';
 import dayjs from 'dayjs';
+import { Card, Flex, Select } from 'antd';
+import { ResponsiveLine } from '@nivo/line';
 import { CardTitle } from '../../components/CardTitle';
-import { useFetchUniqueCategories } from './hooks/useFetchUniqueAccounts';
 import { useFetchMonthlyTrends } from './hooks/useFetchMonthlyTrends';
+import { useFetchUniqueCategories } from './hooks/useFetchUniqueAccounts';
 
 const PLAccountTrendChart: React.FC = () => {
   const { data: masterCategories } = useFetchUniqueCategories();
@@ -21,7 +21,7 @@ const PLAccountTrendChart: React.FC = () => {
   const data = [
     {
       id: selectedCategory,
-      data: (monthlyTrends || []).map((item) => ({
+      data: (monthlyTrends || []).map((item: any) => ({
         x: dayjs(item.month).format('MMM YYYY'),
         y: Number(item.totalAmount).toFixed(2),
       })),
@@ -35,7 +35,7 @@ const PLAccountTrendChart: React.FC = () => {
         style={{ width: 200, display: 'block', justifySelf: 'flex-start' }}
         placeholder="Select Master Category"
         onChange={(masterCategory) => setSelectedCategory(masterCategory)}
-        options={(masterCategories || []).map((category) => ({
+        options={(masterCategories || []).map((category: any) => ({
           label: category,
           value: category,
         }))}
@@ -43,6 +43,7 @@ const PLAccountTrendChart: React.FC = () => {
       {monthlyTrends && (
         <Flex style={{ height: '400px', width: '100%' }}>
           <ResponsiveLine
+            // @ts-ignore
             data={data}
             margin={{ top: 50, right: 50, bottom: 50, left: 60 }}
             xScale={{ type: 'point' }}

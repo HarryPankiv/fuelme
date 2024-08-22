@@ -31,7 +31,7 @@ const TopPLAccountsChart: React.FC = () => {
           indexScale={{ type: 'band', round: true }}
           // colors={{ scheme: 'tableau10' }}
           colors={['#659f83']}
-          colorBy="index"
+          colorBy="indexValue"
           borderColor={'#FFFFFF'}
           axisTop={null}
           axisRight={null}
