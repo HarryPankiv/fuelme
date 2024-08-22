@@ -2,25 +2,11 @@ import React, { useMemo } from 'react';
 import { Card, Table, Typography } from 'antd';
 import dayjs from 'dayjs';
 import { groupBy, keys } from 'ramda';
+import { Transactions } from './types';
 import { CardTitle } from '../../components/CardTitle';
 import { useFetchReport } from './hooks/useFetchReport';
 
 const formatMonth = (date: Date): string => dayjs(date).format('YYYY-MM');
-
-type Transactions = {
-  month: Date;
-  totalAmount: number;
-  totalTransactionCount: number;
-  transactions: {
-    id: number;
-    date: Date;
-    plAccount: string;
-    amount: number;
-    totalAmount: number;
-    masterCategory: string;
-    createdAt: Date
-  }[] | undefined;
-}[]
 
 const groupByMonth = (transactions: Transactions) => {
   const groupByMonthFn = groupBy((transaction: Transactions[number]) =>
