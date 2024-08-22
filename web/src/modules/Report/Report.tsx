@@ -30,9 +30,6 @@ const Report: React.FC = () => {
 
   const tableData = groupByMonth(report || []);
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading report data</div>;
-
   const columns = useMemo(() => [
     {
       title: 'Month',
@@ -94,6 +91,9 @@ const Report: React.FC = () => {
   //     key: 'count',
   //   },
   // ];
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading report data</div>;
 
   return (
     <Card>
