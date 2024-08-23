@@ -5,11 +5,9 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors({
-    origin: ['http://localhost:5173', 'https://fuelme-fe.vercel.app'],
+    origin: ['http://localhost:5173', 'https://fuelme-fe-production.up.railway.app'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type, Accept',
-    
-    credentials: true,
   });
 
   await app.listen(3000);

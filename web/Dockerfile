@@ -13,6 +13,10 @@ RUN npm install
 # Copy the rest of the application code
 COPY . .
 
+# Set environment variable explicitly
+ARG VITE_BACKEND_URL
+ENV VITE_BACKEND_URL=https://$VITE_BACKEND_URL
+
 # Build the application
 RUN npm run build
 

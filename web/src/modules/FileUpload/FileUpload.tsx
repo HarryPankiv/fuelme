@@ -1,20 +1,21 @@
 import React, { useMemo } from 'react';
-import { Card, Upload } from 'antd';
+import { Card, Flex, Upload } from 'antd';
 import type { UploadProps } from 'antd/lib/upload';
 import { InboxOutlined } from '@ant-design/icons';
 import { useUploadFileMutation } from './hooks/useUploadFile';
+import Loader from '../../components/Loader/Loader';
 
 const { Dragger } = Upload;
 
 export const FileUpload: React.FC = () => {
-  const { mutate: uploadFile } = useUploadFileMutation();
+  const { mutate: uploadFile, isPending } = useUploadFileMutation();
 
   const uploadProps: UploadProps<File> = useMemo(
     () => ({
       onChange: ({ file }) => {
         uploadFile(file as any);
       },
-      onDrop() {},
+      onDrop() { },
       beforeUpload: () => {
         return false;
       },
@@ -25,11 +26,17 @@ export const FileUpload: React.FC = () => {
   return (
     <Card>
       <Dragger {...uploadProps}>
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined color="#659f83" />
-        </p>
+        <Flex vertical align='center'>
+          {!isPending ? <p className="ant-upload-drag-icon">
+            <InboxOutlined color="#659f83" />
+          </p> :
+            <Flex align='center' style={{ height: "78px" }}>
+              <Loader />
+            </Flex>
+          }
+        </Flex>
         <p className="ant-upload-text">
-          Click or drag file to this area to upload
+          {!isPending ? 'Click or drag file to this area to upload' : 'Uploading...'}
         </p>
         <p className="ant-upload-hint">
           Support for a single or bulk upload. Strictly prohibited from
