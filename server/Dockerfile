@@ -11,7 +11,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm install --production
+RUN npm install --omit=dev
+RUN npm install -g @nestjs/cli
 
 # Copy the rest of the application code to the working directory
 COPY . .
@@ -23,9 +24,9 @@ RUN npm run build
 EXPOSE 3000 5432
 
 # Define environment variables for PostgreSQL
-ENV POSTGRES_USER=your_user
-ENV POSTGRES_PASSWORD=your_password
-ENV POSTGRES_DB=your_db
+ENV POSTGRES_USER=harry
+ENV POSTGRES_PASSWORD=Welcome1!
+ENV POSTGRES_DB=fuelmedb
 ENV POSTGRES_PORT=5432
 
 # Set up PostgreSQL data directory
