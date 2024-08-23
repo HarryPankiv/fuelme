@@ -1,9 +1,6 @@
 # Use an official Node.js runtime as a parent image
 FROM node:18-alpine
 
-# Install dependencies for PostgreSQL
-RUN apk add --no-cache postgresql postgresql-contrib
-
 # Set the working directory inside the container
 WORKDIR /app
 
@@ -21,24 +18,9 @@ COPY . .
 RUN npm run build
 
 # Expose the port that the application will run on
-EXPOSE 3000 5432
+EXPOSE 3000
 
-# Define environment variables for PostgreSQL
-ENV POSTGRES_USER=harry
-ENV POSTGRES_PASSWORD=Welcome1!
-ENV POSTGRES_DB=fuelmedb
-ENV POSTGRES_PORT=5432
-
-# Set up PostgreSQL data directory
-RUN mkdir -p /var/lib/postgresql/data \
-    && chown -R postgres:postgres /var/lib/postgresql
-
-USER postgres
-
-# Initialize PostgreSQL and start the service
-RUN initdb -D /var/lib/postgresql/data
-
-# Switch back to root to run both PostgreSQL and the application
+# Switch to root to run the application
 USER root
 
 # Copy an entrypoint script
